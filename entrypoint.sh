@@ -1,15 +1,39 @@
 #!/bin/sh
-
-# set -x
 set -e
 
-# Construct the JSON payload
-PAYLOAD=$(jq -nc   --arg description "Deploying Repository: $GITHUB_REPOSITORY on branch $GITHUB_REF_NAME"   --arg commit_hash "$GITHUB_SHA"   --arg machine "$RUNNER_NAME"   --arg ref_name "$GITHUB_REF_NAME"   --arg ip "$(curl -s https://api.ipify.org)"   '{"embeds": [{"description": $description, "fields": [
-    {"name": "Commit Hash", "value": $commit_hash},
-    {"name": "Ref Name", "value": $ref_name},
-    {"name": "Machine", "value": $machine},
-    {"name": "IP Address", "value": $ip}
-  ]}]}')
+# Function to get the public IP address
+get_public_ip() {
+    curl -s https://api.ipify.org
+}
+
+# Gather information from the environment
+GITHUB_REPOSITORY=${GITHUB_REPOSITORY:-"Unknown Repository"}
+GITHUB_REF_NAME=${GITHUB_REF_NAME:-"Unknown Branch"}
+GITHUB_SHA=${GITHUB_SHA:-"Unknown SHA"}
+RUNNER_NAME=${RUNNER_NAME:-"Unknown Runner"}
+
+# Construct the JSON payload using a heredoc for better readability
+PAYLOAD=$(jq -nc --arg description "Deploying Repository: $GITHUB_REPOSITORY on branch $GITHUB_REF_NAME" \
+               --arg commit_hash "$GITHUB_SHA" \
+               --arg repo "$GITHUB_REPOSITORY" \
+               --arg machine "$RUNNER_NAME" \
+               --arg ref_name "$GITHUB_REF_NAME" \
+               --arg ip "$(get_public_ip)" \
+               '{
+                   "embeds": [
+                       {
+                           "description": $description,
+                           "fields": [
+                               {"name": "Repo:", "value": $repo},
+                               {"name": "Commit", "value": $commit_hash},
+                               {"name": "Ref", "value": $ref_name},
+                               {"name": "Machine", "value": $machine},
+                               {"name": "IP Address", "value": $ip}
+                           ]
+                       }
+                   ]
+               }')
 
 # Post to Discord
-curl -X POST -H "Content-Type: application/json" -d "$PAYLOAD" "$INPUT_DISCORD_WEBHOOK_URL"
+DISCORD_WEBHOOK_URL=${INPUT_DISCORD_WEBHOOK_URL:-"Your Webhook URL Here"}
+curl -X POST -H "Content-Type: application/json" -d "$PAYLOAD" "$DISCORD_WEBHOOK_URL"
