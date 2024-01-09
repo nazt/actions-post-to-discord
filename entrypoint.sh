@@ -25,9 +25,9 @@ PAYLOAD=$(jq -nc --arg description "Deploying Repository: $GITHUB_REPOSITORY on 
                            "description": $description,
                            "fields": [
                                {"name": "Repo:", "value": $repo},
-                               {"name": "Commit", "value": $commit_hash},
-                               {"name": "Ref", "value": $ref_name},
-                               {"name": "Machine", "value": $machine},
+                               {"name": "Commit:", "value": $commit_hash},
+                               {"name": "Branch/Tag:", "value": $ref_name},
+                               {"name": "Machine:", "value": $machine},
                                {"name": "IP Address", "value": $ip}
                            ]
                        }
