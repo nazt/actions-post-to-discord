@@ -1,5 +1,5 @@
-
-#!/bin/sh -l
+#!/bin/bash
+set -e
 
 # Fetching inputs
 WEBHOOK_URL=$1
