@@ -12,6 +12,7 @@ GITHUB_REF_NAME=${GITHUB_REF_NAME:-"Unknown Branch"}
 GITHUB_SHA=${GITHUB_SHA:-"Unknown SHA"}
 RUNNER_NAME=${RUNNER_NAME:-"Unknown Runner"}
 
+env
 # Construct the JSON payload using a heredoc for better readability
 PAYLOAD=$(jq -nc --arg description "Deploying Repository: $GITHUB_REPOSITORY on branch $GITHUB_REF_NAME" \
                --arg commit_hash "$GITHUB_SHA" \
