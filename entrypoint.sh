@@ -3,6 +3,15 @@
 set -x
 set -e
 
+
+env
+
+echo $1
+echo $2
+echo $3
+echo $4
+echo $5
+
 # Fetching inputs
 WEBHOOK_URL=$1
 REPO_NAME=$2
