@@ -19,6 +19,7 @@ PAYLOAD=$(jq -nc --arg description "Deploying Repository: $GITHUB_REPOSITORY on 
                --arg repo "$GITHUB_REPOSITORY" \
                --arg machine "$RUNNER_NAME" \
                --arg ref_name "$GITHUB_REF_NAME" \
+               --arg actor "$GITHUB_ACTOR" \
                --arg ip "$(get_public_ip)" \
                '{
                    "embeds": [
@@ -29,7 +30,8 @@ PAYLOAD=$(jq -nc --arg description "Deploying Repository: $GITHUB_REPOSITORY on 
                                {"name": "Commit:", "value": $commit_hash},
                                {"name": "Branch/Tag:", "value": $ref_name},
                                {"name": "Machine:", "value": $machine},
-                               {"name": "IP Address:", "value": $ip}
+                               {"name": "IP Address:", "value": $ip},
+                               {"name": "Actor:", "value": $actor}
                            ]
                        }
                    ]
