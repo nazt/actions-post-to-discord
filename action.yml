@@ -1,0 +1,25 @@
+
+name: 'Post to Discord'
+description: 'Posts a custom message to Discord'
+inputs:
+  discord_webhook_url:
+    description: 'Discord webhook URL'
+    required: true
+  github_token:
+    description: 'GitHub Token for authentication'
+    required: true
+  repository:
+    description: 'GitHub Repository Name'
+    required: true
+  commit_hash:
+    description: 'Commit Hash'
+    required: true
+  ref_name:
+    description: 'Branch or Tag Name'
+    required: true
+  machine:
+    description: 'Machine/Runner Info'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
