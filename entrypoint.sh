@@ -18,5 +18,6 @@ PAYLOAD=$(jq -nc   --arg description "Deploying Repository: $REPO_NAME on branch
     {"name": "IP Address", "value": $ip}
   ]}]}')
 
+echo "$WEBHOOK_URL"
 # Post to Discord
 curl -X POST -H "Content-Type: application/json" -d "$PAYLOAD" "$WEBHOOK_URL"
