@@ -14,3 +14,6 @@ PAYLOAD=$(jq -nc   --arg description "Deploying Repository: $GITHUB_REPOSITORY o
 # Post to Discord
 # curl -X POST -H "Content-Type: application/json" -d "$PAYLOAD" "$INPUT_DISCORD_WEBHOOK_URL"
 curl -X POST -H "Content-Type: application/json" -d '{"content": "done :)"}' "$INPUT_DISCORD_WEBHOOK_URL"
+
+
+# https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions
